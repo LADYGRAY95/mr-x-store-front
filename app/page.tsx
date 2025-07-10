@@ -9,20 +9,20 @@ import Footer from "@/components/footer/footer";
 import Gaming from "@/components/products/gaming";
 import Video from "@/components/banner/video";
 import Gift from "@/components/giftcard/gift";
-import About from "@/components/about/about";
+import About from "@/app/about/page";
 import Home from "./home";
-import SocialMediaBoostingSection from "@/./components/services/socialboost";
-import SocialMediaSponsorSection from "@/./components/services/socialsponsor";
-import NetflixAccountsSection from "@/./components/services/netflix";
-import SpotifyAccountsSection from "@/./components/services/spotify";
-import PSPlusSubscriptionsSection from "@/./components/services/pspass";
-import SoftwareSubscriptionSection from "@/./components/services/softwares";
-import SteamGiftCardSection from "@/./components/giftcard/steam";
-import ITunes from "@/./components/giftcard/itunes";
-import PSNGiftCardSection from "@/./components/giftcard/psn";
-import XboxGiftCardSection from "@/./components/giftcard/xbox";
-import LoginPage from "@/components/login&register/login";
-import Cart from "./cart/cart";
+import SocialMediaBoostingSection from "@/app/socialboost/page";
+import SocialMediaSponsorSection from "@/app/socialsponsor/page";
+import NetflixAccountsSection from "@/app/netflix/page";
+import SpotifyAccountsSection from "@/app/spotify/page";
+import PSPlusSubscriptionsSection from "@/app/pspass/page";
+import SoftwareSubscriptionSection from "@/app/softwares/page";
+import SteamGiftCardSection from "@/app/steam/page";
+import ITunes from "@/app/itunes/page";
+import PSNGiftCardSection from "@/app/psn/page";
+import XboxGiftCardSection from "@/app/xbox/page";
+import LoginPage from "@/app/login/page";
+import Cart from "./cart/page";
 
 export default function HomePage(): JSX.Element {
   return (

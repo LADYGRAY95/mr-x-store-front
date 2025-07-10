@@ -6,32 +6,20 @@ import Logo from '/app/logo.png';
 import cart from '/app/emptycart.png';
 
 const NavLinks = [
-  {
-    id: 1,
-    title: 'Home',
-    link: '/'
-  },
-  {
-    id: 2,
-    title: 'About Us',
-    link: '/About'
-  },
-  {
-    id: 3,
-    title: 'User Agreement',
-    link: '/useragreement'
-  },
+  { id: 1, title: 'Home', link: '/' },
+  { id: 2, title: 'About Us', link: '/about' },
+  { id: 3, title: 'User Agreement', link: '/termscondition' },
   {
     id: 4,
     title: 'Gaming',
     link: '#',
     subLinks: [
       { id: 41, title: 'Game accounts', link: '/gameacct' },
-      { id: 42, title: 'Game keys', link: '/gameskey' },
+      { id: 42, title: 'Game keys', link: '/gamekey' },
       { id: 43, title: 'In game credits', link: '/ingamecred' },
       { id: 44, title: 'Ps games', link: '/psgames' },
       { id: 45, title: 'Xbox games', link: '/xboxgames' },
-    ]
+    ],
   },
   {
     id: 5,
@@ -45,7 +33,7 @@ const NavLinks = [
       { id: 55, title: 'Psn pass', link: '/pspass' },
       { id: 56, title: 'Xbox pass', link: '/xpass' },
       { id: 57, title: 'Softwares', link: '/softwares' },
-    ]
+    ],
   },
   {
     id: 6,
@@ -56,167 +44,139 @@ const NavLinks = [
       { id: 62, title: 'itunes Gift card', link: '/itunes' },
       { id: 63, title: 'Psn Gift card', link: '/psn' },
       { id: 64, title: 'xbox gift card', link: '/xbox' },
-    ]
-  }
+    ],
+  },
 ];
 
 const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const handleClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
-    const targetId = parseInt(event.currentTarget.dataset.id || '-1');
-    setOpenDropdown(openDropdown === targetId ? null : targetId);
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const id = parseInt(e.currentTarget.dataset.id || '-1');
+    setOpenDropdown(openDropdown === id ? null : id);
   };
 
-  const toggleMobileMenu = () => {
-    setShowMobileMenu(!showMobileMenu);
-  };
+  const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
   return (
-    <div className='shadow-xl'>
-      <div className='container py-3 sm:py-0'>
-        <div className='flex justify-between items-center'>
-          {/* logo section */}
-          <div>
-            <a target="blank" href="https://www.facebook.com/profile.php?id=61550064407218">
-              <Image src={Logo} alt="logo" className="w-20" width={80} height={80} />
-            </a>
-          </div>
-          {/* links section */}
-          <div className='flex justify-between items-center gap-4'>
-            <ul className='hidden sm:flex items-center gap-4'>
-              {NavLinks.map((link) => (
-                <li key={link.id}>
-                  {link.subLinks ? (
-                    <div className='relative group'>
+    <div className="shadow-xl z-50 w-full bg-black bg-opacity-90">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
+          <Image src={Logo} alt="Logo" className="w-16 sm:w-20" />
+        </Link>
+
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex items-center gap-6">
+          {NavLinks.map((link) => (
+            <li key={link.id} className="relative group">
+              {link.subLinks ? (
+                <>
+                  <a
+                    data-id={link.id}
+                    onClick={handleClick}
+                    className={`text-white font-medium flex items-center cursor-pointer px-2 py-3 hover:text-red-500 ${
+                      openDropdown === link.id ? 'text-red-500' : ''
+                    }`}
+                  >
+                    {link.title}
+                    <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                  </a>
+                  <div
+                    className={`absolute top-full left-0 mt-2 bg-black bg-opacity-95 z-50 w-48 rounded-md shadow-lg ${
+                      openDropdown === link.id ? 'block' : 'hidden'
+                    }`}
+                  >
+                    {link.subLinks.map((sub) => (
                       <Link
-                        href={link.link}
-                        data-id={link.id}
-                        className={`text-white inline-block py-4 px-4 hover:text-red-500 duration-300 flex items-center ${
-                          openDropdown === link.id ? 'text-red-500' : ''
-                        }`}
-                        onClick={handleClick}
+                        key={sub.id}
+                        href={sub.link}
+                        className="block px-4 py-2 text-white hover:bg-gray-800 hover:text-red-500"
                       >
-                        {link.title}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        {sub.title}
                       </Link>
-                      <div
-                        className={`absolute z-10 bg-black shadow-lg rounded-lg w-48 mt-4 ${
-                          openDropdown === link.id ? 'block' : 'hidden'
-                        }`}
-                      >
-                        {link.subLinks.map((subLink) => (
-                          <Link
-                            key={subLink.id}
-                            href={subLink.link}
-                            className='block px-4 py-2 text-white hover:bg-gray-800 hover:text-red-500 duration-300'
-                          >
-                            {subLink.title}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link href={link.link} className='text-white inline-block py-4 px-4 hover:text-red-500 duration-300 flex items-center' onClick={handleClick}>
-                      {link.title}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <Link href="/login" className='bg-gradient-to-r from-primary to-secondary text-white px-6 font-bold py-2 py-1 rounded-full hover:scale-105 duration-200'>
-              login
-            </Link>
-            <Link href="/cart" className='hover:scale-105 duration-200'>
-              <Image src={cart} alt="cart icon" className='h-9 w-9 relative top-1' width={36} height={36} />
-              <span className="bg-primary text-white px-1 py-1 rounded-md text-sm font-medium relative top-2 left-6">0</span>
-            </Link>
-            <button
-              className='sm:hidden block text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white'
-              onClick={toggleMobileMenu}
-            >
-              <svg
-                className={`h-6 w-6 ${showMobileMenu ? 'hidden' : 'block'}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <Link
+                  href={link.link}
+                  className="text-white font-medium hover:text-red-500 px-2 py-3"
+                >
+                  {link.title}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* Buttons */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/login"
+            className="bg-gradient-to-r from-primary to-secondary text-white font-bold px-4 py-1.5 rounded-full hover:scale-105 transition"
+          >
+            Login
+          </Link>
+          <Link href="/cart" className="relative">
+            <Image src={cart} alt="Cart" width={32} height={32} />
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1 rounded-full">
+              0
+            </span>
+          </Link>
+
+          {/* Hamburger */}
+          <button
+            onClick={toggleMobileMenu}
+            className="lg:hidden ml-2 text-white focus:outline-none"
+          >
+            {showMobileMenu ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-              <svg
-                className={`h-6 w-6 ${showMobileMenu ? 'block' : 'hidden'}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-            </button>
-          </div>
+            )}
+          </button>
         </div>
-        {/* Mobile menu */}
-        <div
-          className={`sm:hidden bg-black py-4 px-6 ${
-            showMobileMenu ? 'block' : 'hidden'
-          }`}
-        >
-          <ul className='space-y-4'>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {showMobileMenu && (
+        <div className="lg:hidden bg-black bg-opacity-95 py-4 px-6">
+          <ul className="flex flex-col gap-4">
             {NavLinks.map((link) => (
               <li key={link.id}>
                 {link.subLinks ? (
-                  <div className='relative group'>
-                    <Link
-                      href={link.link}
-                      data-id={link.id}
-                      className={`text-white inline-block py-2 px-4 hover:text-red-500 duration-300 flex items-center ${
-                        openDropdown === link.id ? 'text-red-500' : ''
-                      }`}
-                      onClick={handleClick}
-                    >
+                  <details className="group">
+                    <summary className="flex items-center justify-between text-white font-medium cursor-pointer">
                       {link.title}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
+                      <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                       </svg>
-                    </Link>
-                    <div
-                      className={`absolute z-10 bg-black shadow-lg rounded-lg w-48 mt-2 ${
-                        openDropdown === link.id ? 'block' : 'hidden'
-                      }`}
-                    >
-                      {link.subLinks.map((subLink) => (
+                    </summary>
+                    <div className="mt-2 ml-4">
+                      {link.subLinks.map((sub) => (
                         <Link
-                          key={subLink.id}
-                          href={subLink.link}
-                          className='block px-4 py-2 text-white hover:bg-gray-800 hover:text-red-500 duration-300'
+                          key={sub.id}
+                          href={sub.link}
+                          className="block py-1 text-white hover:text-red-500"
                         >
-                          {subLink.title}
+                          {sub.title}
                         </Link>
                       ))}
                     </div>
-                  </div>
+                  </details>
                 ) : (
-                  <Link href={link.link} className='text-white inline-block py-2 px-4 hover:text-red-500 duration-300 flex items-center' onClick={handleClick}>
+                  <Link
+                    href={link.link}
+                    className="text-white font-medium hover:text-red-500"
+                  >
                     {link.title}
                   </Link>
                 )}
@@ -224,7 +184,7 @@ const Navbar: React.FC = () => {
             ))}
           </ul>
         </div>
-      </div>
+      )}
     </div>
   );
 };

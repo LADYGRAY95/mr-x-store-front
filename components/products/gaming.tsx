@@ -24,7 +24,7 @@ const gamingData = [
         img:img2,
         description:"All types of game keys are available: steam, epic games, etc.",
         aosDelay:"200",
-        link:"/gameskey",
+        link:"/gamekey",
     },
     {
         id:3,
