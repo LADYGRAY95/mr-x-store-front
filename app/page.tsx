@@ -22,7 +22,7 @@ import ITunes from "@/./components/giftcard/itunes";
 import PSNGiftCardSection from "@/./components/giftcard/psn";
 import XboxGiftCardSection from "@/./components/giftcard/xbox";
 import LoginPage from "@/components/login&register/login";
-import Cart from "./cart";
+import Cart from "./cart/cart";
 
 export default function HomePage(): JSX.Element {
   return (
